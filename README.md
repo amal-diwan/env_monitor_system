@@ -56,7 +56,7 @@ Main components:
 
 ## Circuit Diagram
 
-![Circuit Diagram](docs/circuit.png)
+![Circuit Diagram](circuit.png)
 
 ## System Behavior
 
