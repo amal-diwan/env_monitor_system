@@ -29,28 +29,13 @@ Thresholds can be tuned three ways — on-device buttons, a serial command line,
 ---
 
 ## System architecture
-
-```
-                         ┌───────────────────────────┐
-                         │      Cooperative Scheduler  │  ← non-blocking, interval-driven
-                         └───────────────────────────┘
-            ┌──────────────┬───────────┬───────────┬──────────────┬──────────────┐
-            ▼              ▼           ▼           ▼              ▼              
-       ┌─────────┐   ┌──────────┐ ┌─────────┐ ┌─────────┐  ┌─────────────┐
-       │ Sensors │   │ Display  │ │ Alerts  │ │ Input   │  │ Serial CLI  │
-       │ DHT+LDR │   │   LCD    │ │ LED+Buzz│ │ Buttons │  │  commands   │
-       └─────────┘   └──────────┘ └─────────┘ └─────────┘  └─────────────┘
-            │              │           │           │              │
-            └──────────────┴────►  Shared State  ◄─┴──────────────┘
-                          (sensor data · thresholds · modes)
-                                       │
-                                 ┌───────────┐
-                                 │  EEPROM   │  ← validated persistence
-                                 └───────────┘
-```
-
-Each module exposes an `init()` and a periodic update function; the scheduler calls them at independent rates (sensors every 1 s, LCD ~3 Hz, inputs every 20 ms, etc.), so slow operations never block fast ones.
-
+ 
+<p align="center"> <img src="sa.png" alt="System Architecture" width="480"> </p>
+ 
+The firmware is organized around a central **shared state** with a small **cooperative scheduler** on top. The scheduler holds a table of tasks, each with its own interval, and runs only the ones whose time has come — so reading a sensor once per second never blocks polling the buttons every 20 ms, giving multitasking-like responsiveness without an RTOS.
+ 
+Each module owns a single concern (sensors, display, alerts, input, serial) and never calls the others directly. Instead they all communicate through the shared state — sensors and the input/serial interfaces *write* to it, while the display and alert modules *read* from it. This keeps every module decoupled and independently testable. Beneath it, a persistence layer saves validated thresholds to **EEPROM** and restores them on boot, falling back to defaults if the stored data is missing or corrupt.
+ 
 ---
 
 ## Features
