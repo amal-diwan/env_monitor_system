@@ -2,7 +2,7 @@
 
 > A modular, non-blocking embedded firmware for an Arduino-based environmental monitor — it tracks **temperature, humidity, and ambient light**, raises tiered visual/audible alerts against user-configurable thresholds, and persists its configuration across power cycles.
 
-<p align="center"> <img src="circuit.png" alt="Environmental Monitoring System" width="480"> </p>
+<p align="center"> <img src="docs/Circuit.png" alt="Environmental Monitoring System" width="480"> </p>
 
 ---
 
@@ -30,7 +30,7 @@ Thresholds can be tuned three ways — on-device buttons, a serial command line,
 
 ## System architecture
  
-<p align="center"> <img src="sa.png" alt="System Architecture" width="480"> </p>
+<p align="center"> <img src="docs/sa.png" alt="System Architecture" width="480"> </p>
  
 The firmware is organized around a central **shared state** with a small **cooperative scheduler** on top. The scheduler holds a table of tasks, each with its own interval, and runs only the ones whose time has come — so reading a sensor once per second never blocks polling the buttons every 20 ms, giving multitasking-like responsiveness without an RTOS.
  
