@@ -2,7 +2,7 @@
 
 > A modular, non-blocking embedded firmware for an Arduino-based environmental monitor — it tracks **temperature, humidity, and ambient light**, raises tiered visual/audible alerts against user-configurable thresholds, and persists its configuration across power cycles.
 
-<p align="center"> <img src="circuit.jpeg" alt="Environmental Monitoring System" width="480"> </p>
+<p align="center"> <img src="circuit.png" alt="Environmental Monitoring System" width="480"> </p>
 
 ---
 
