@@ -59,7 +59,7 @@ Each module owns a single concern (sensors, display, alerts, input, serial) and 
 | Area              | Details                                                        |
 |-------------------|----------------------------------------------------------------|
 | Language          | Embedded C++ (Arduino framework)                               |
-| Target            | Arduino Uno / any ATmega328-based board                        |
+| Target            | Arduino Uno                                                    |
 | Sensors           | DHT11 (temperature + humidity), LDR / photoresistor (light)    |
 | Output            | 16×2 HD44780 LCD, RGB LED, passive buzzer                       |
 | Input             | 3 momentary push buttons (debounced)                           |
